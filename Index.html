@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruptura Mercearia Doce | Reunião 16/04/2026</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --preto:#000; --vermelho:#E31837; --verde:#00873e; --laranja:#c67c00; --cinza-bg:#f2f2f2; }
+  body { font-family: Arial, sans-serif; background: var(--cinza-bg); color: #1a1a1a; font-size: 14px; }
+  header { background:var(--preto); border-bottom:4px solid var(--vermelho); padding:14px 20px;
+           display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .header-logo { font-size:20px; font-weight:bold; color:#fff; letter-spacing:3px; }
+  .header-sub  { font-size:11px; color:#aaa; margin-top:2px; }
+  .header-date { font-size:12px; color:#aaa; text-align:right; white-space:nowrap; }
+  .header-date strong { color:#fff; font-size:15px; display:block; }
+  .container { max-width:1400px; margin:0 auto; padding:16px; }
+  .frentes-nav { display:flex; flex-wrap:wrap; gap:3px; margin-bottom:0; border-bottom:3px solid var(--vermelho); }
+  .frente-btn { background:#ddd; border:none; padding:10px 16px; font-size:12px; font-weight:bold;
+                cursor:pointer; color:#444; border-radius:4px 4px 0 0; white-space:nowrap; }
+  .frente-btn:hover { background:#c8c8c8; }
+  .frente-btn.active { background:var(--vermelho); color:#fff; }
+  .frente-btn .num { display:inline-block; background:#000; color:#fff; width:18px; height:18px;
+                      line-height:18px; text-align:center; border-radius:50%; font-size:10px; margin-right:6px; }
+  .frente-btn.active .num { background:#fff; color:var(--vermelho); }
+  .frente-panel { display:none; background:#fff; border-radius:0 0 6px 6px; box-shadow:0 1px 4px rgba(0,0,0,.1); padding:20px; }
+  .frente-panel.active { display:block; }
+  h2 { font-size:18px; color:#000; margin-bottom:6px; border-left:4px solid var(--vermelho); padding-left:10px; }
+  .subtitle { font-size:12px; color:#666; margin-bottom:18px; }
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-bottom:24px; }
+  .kpi { background:#fafafa; border-radius:6px; padding:16px; border-left:4px solid var(--vermelho); }
+  .kpi .label { font-size:11px; color:#888; text-transform:uppercase; letter-spacing:1px; font-weight:bold; }
+  .kpi .valor { font-size:32px; font-weight:bold; color:#000; margin:4px 0; line-height:1; }
+  .kpi .valor.red { color:var(--vermelho); }
+  .kpi .valor.orange { color:var(--laranja); }
+  .kpi .valor.green { color:var(--verde); }
+  .kpi .sub { font-size:11px; color:#666; }
+  .cards { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:20px; }
+  @media(max-width:1100px){ .cards{ grid-template-columns:repeat(3,1fr); } }
+  @media(max-width:700px) { .cards{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:420px) { .cards{ grid-template-columns:1fr; } }
+  .card { background:#fff; border:1px solid #e5e5e5; border-radius:6px; padding:14px; border-top:4px solid var(--preto); }
+  .card.alerta { border-top-color:var(--vermelho); }
+  .card .loja-tag { font-size:10px; font-weight:bold; color:#888; letter-spacing:1px; }
+  .card .loja-nome { font-size:17px; font-weight:bold; color:#000; margin:3px 0 8px; }
+  .card .ruptura-num { font-size:30px; font-weight:bold; color:var(--vermelho); line-height:1; }
+  .card .ruptura-label { font-size:10px; color:#888; margin-bottom:4px; }
+  .curva-a-badge { display:inline-block; background:var(--vermelho); color:#fff; font-size:10px; font-weight:bold; padding:2px 8px; border-radius:10px; }
+  .card .metrics { margin-top:10px; border-top:1px solid #eee; padding-top:8px; }
+  .card .metric { display:flex; justify-content:space-between; font-size:11px; color:#555; margin-top:3px; }
+  .card .metric .val { font-weight:bold; color:#000; }
+  .tbl-wrap { overflow-x:auto; margin-top:14px; }
+  table { width:100%; border-collapse:collapse; font-size:12px; min-width:540px; }
+  thead tr { background:var(--preto); color:#fff; }
+  thead th { padding:9px 10px; text-align:left; font-weight:bold; white-space:nowrap; }
+  tbody tr:nth-child(even) { background:#f9f9f9; }
+  tbody tr:hover { background:#f0f0f0; }
+  tbody td { padding:7px 10px; border-bottom:1px solid #eee; vertical-align:middle; }
+  tr.estrategico { background:#fff5f5 !important; }
+  tr.estrategico:hover { background:#ffe8e8 !important; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:bold; color:#fff; }
+  .badge-A { background:var(--vermelho); }
+  .badge-B { background:var(--laranja); }
+  .badge-C { background:#555; }
+  .badge-D { background:#999; }
+  .badge-est { background:#000; color:#fff; font-size:9px; padding:2px 6px; border-radius:10px; margin-left:4px; }
+  .bar-row { display:grid; grid-template-columns: 220px 1fr 60px; gap:10px; align-items:center; margin:6px 0; font-size:12px; }
+  .bar-label { font-weight:bold; color:#333; }
+  .bar-container { background:#eee; border-radius:3px; height:22px; overflow:hidden; position:relative; }
+  .bar-fill { height:100%; border-radius:3px; display:flex; align-items:center; padding-left:8px; color:#fff; font-weight:bold; font-size:11px; }
+  .bar-val { text-align:right; font-weight:bold; }
+  .aviso { background:#fff8e1; border-left:4px solid var(--laranja); padding:10px 14px; margin:14px 0; font-size:12px; color:#555; border-radius:0 4px 4px 0; }
+  .aviso-info { background:#e8f4fd; border-left:4px solid #0288d1; padding:10px 14px; margin:14px 0; font-size:12px; color:#555; border-radius:0 4px 4px 0; }
+  .agenda-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(90px,1fr)); gap:8px; margin:14px 0; }
+  .agenda-dia { background:#fff; border:1px solid #e5e5e5; border-radius:6px; padding:10px; text-align:center; }
+  .agenda-dia .dia { font-size:11px; color:#888; font-weight:bold; }
+  .agenda-dia .val { font-size:20px; font-weight:bold; margin-top:4px; }
+  .agenda-dia .val.high { color:var(--verde); }
+  .agenda-dia .val.mid { color:var(--laranja); }
+  .agenda-dia .val.low { color:var(--vermelho); }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="header-logo">PALATO</div>
+    <div class="header-sub">Reunião de Ruptura — Mercearia Doce (Dpto 3)</div>
+  </div>
+  <div class="header-date"><strong>16/04/2026</strong>referência de estoque</div>
+</header>
+<div class="container">
+<div style="background:#fff; border-radius:6px; padding:20px; margin-bottom:20px; box-shadow:0 1px 4px rgba(0,0,0,.08);">
+  <h2>Visão geral — 16/04/2026</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Rupturas totais</div><div class="valor red">1475</div><div class="sub">5 lojas</div></div>
+    <div class="kpi"><div class="label">Curva A em ruptura</div><div class="valor red">602</div><div class="sub">prioridade máxima</div></div>
+    <div class="kpi"><div class="label">Agenda de pedidos</div><div class="valor orange">67.5%</div><div class="sub">média do mês</div></div>
+    <div class="kpi"><div class="label">Itens AB com CD disponível</div><div class="valor orange">87</div><div class="sub">1 estratégicos</div></div>
+    <div class="kpi"><div class="label">Desequilíbrio AB</div><div class="valor orange">316</div><div class="sub">36 estratégicos</div></div>
+  </div>
+</div>
+<div class="frentes-nav">
+  <button class="frente-btn active" onclick="showFrente(event,1)"><span class="num">1</span>Curva A</button>
+  <button class="frente-btn"        onclick="showFrente(event,2)"><span class="num">2</span>Fornecedores estratégicos</button>
+  <button class="frente-btn"        onclick="showFrente(event,3)"><span class="num">3</span>Produtos no CD</button>
+  <button class="frente-btn"        onclick="showFrente(event,4)"><span class="num">4</span>Desequilíbrio entre lojas</button>
+  <button class="frente-btn"        onclick="showFrente(event,5)"><span class="num">5</span>Cumprimento da agenda</button>
+</div>
+
+<!-- FRENTE 1 -->
+<div class="frente-panel active" id="f1">
+  <h2>Frente 1 — Ruptura Curva A</h2>
+  <div class="subtitle">Total: 602 itens Curva A em ruptura nas 5 lojas</div>
+  <div class="cards">
+    <div class="card alerta">
+      <div class="loja-tag">LOJA 001</div>
+      <div class="loja-nome">PV</div>
+      <div class="ruptura-num">330</div>
+      <div class="ruptura-label">rupturas totais</div>
+      <span class="curva-a-badge">▲ 147 Curva A</span>
+      <div class="metrics">
+        <div class="metric"><span>Curva B</span><span class="val">26</span></div>
+        <div class="metric"><span>Curvas C/D</span><span class="val">157</span></div>
+        <div class="metric" style="margin-top:6px;padding-top:6px;border-top:1px solid #eee;">
+          <span>CD disp.</span><span class="val">65 (19.7%)</span>
+        </div>
+      </div>
+    </div>    <div class="card">
+      <div class="loja-tag">LOJA 002</div>
+      <div class="loja-nome">Parque</div>
+      <div class="ruptura-num">115</div>
+      <div class="ruptura-label">rupturas totais</div>
+      <span class="curva-a-badge">▲ 4 Curva A</span>
+      <div class="metrics">
+        <div class="metric"><span>Curva B</span><span class="val">0</span></div>
+        <div class="metric"><span>Curvas C/D</span><span class="val">13</span></div>
+        <div class="metric" style="margin-top:6px;padding-top:6px;border-top:1px solid #eee;">
+          <span>CD disp.</span><span class="val">24 (20.9%)</span>
+        </div>
+      </div>
+    </div>    <div class="card alerta">
+      <div class="loja-tag">LOJA 004</div>
+      <div class="loja-nome">Farol</div>
+      <div class="ruptura-num">273</div>
+      <div class="ruptura-label">rupturas totais</div>
+      <span class="curva-a-badge">▲ 121 Curva A</span>
+      <div class="metrics">
+        <div class="metric"><span>Curva B</span><span class="val">26</span></div>
+        <div class="metric"><span>Curvas C/D</span><span class="val">126</span></div>
+        <div class="metric" style="margin-top:6px;padding-top:6px;border-top:1px solid #eee;">
+          <span>CD disp.</span><span class="val">62 (22.7%)</span>
+        </div>
+      </div>
+    </div>    <div class="card alerta">
+      <div class="loja-tag">LOJA 007</div>
+      <div class="loja-nome">Praia</div>
+      <div class="ruptura-num">447</div>
+      <div class="ruptura-label">rupturas totais</div>
+      <span class="curva-a-badge">▲ 174 Curva A</span>
+      <div class="metrics">
+        <div class="metric"><span>Curva B</span><span class="val">30</span></div>
+        <div class="metric"><span>Curvas C/D</span><span class="val">243</span></div>
+        <div class="metric" style="margin-top:6px;padding-top:6px;border-top:1px solid #eee;">
+          <span>CD disp.</span><span class="val">92 (20.6%)</span>
+        </div>
+      </div>
+    </div>    <div class="card alerta">
+      <div class="loja-tag">LOJA 008</div>
+      <div class="loja-nome">Riomar</div>
+      <div class="ruptura-num">310</div>
+      <div class="ruptura-label">rupturas totais</div>
+      <span class="curva-a-badge">▲ 156 Curva A</span>
+      <div class="metrics">
+        <div class="metric"><span>Curva B</span><span class="val">28</span></div>
+        <div class="metric"><span>Curvas C/D</span><span class="val">126</span></div>
+        <div class="metric" style="margin-top:6px;padding-top:6px;border-top:1px solid #eee;">
+          <span>CD disp.</span><span class="val">N/A</span>
+        </div>
+      </div>
+    </div>  </div>
+  <h3 style="margin-top:20px;font-size:14px;color:#000;">Top 30 itens Curva A com maior abrangência de ruptura</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Código</th><th>Descrição</th><th>Fornecedor</th><th>Lojas em ruptura</th><th>Qtd</th><th>Est. CD</th></tr></thead>
+      <tbody>
+        <tr><td>1191004</td><td>Palha Italiana Germanos 30g Churros</td><td>Germanos</td><td>001, 004, 007, 008</td><td><b>4</b></td><td>0</td></tr>
+        <tr><td>908800</td><td>Cafe Soluvel Lor 40g Lio Finalizado Classique Refinado Sache</td><td>Jde</td><td>001, 004, 007, 008</td><td><b>4</b></td><td>0</td></tr>
+        <tr><td>108863</td><td>Cafe Nescafe 300g c Leite</td><td>Nestle Brasil - Ped</td><td>001, 004, 007, 008</td><td><b>4</b></td><td>0</td></tr>
+        <tr><td>245410</td><td>Geleia Queensberry 280g Diet Goiaba</td><td>Hero - Queensberry Ped</td><td>001, 004, 007, 008</td><td><b>4</b></td><td>0</td></tr>
+        <tr><td>174157</td><td>Geleia Queensberry 280g Diet Damasco</td><td>Hero - Queensberry Ped</td><td>001, 004, 007, 008</td><td><b>4</b></td><td>0</td></tr>
+        <tr><td>1171739</td><td>Chocolate Lindt Classic 100g Dark</td><td>Lindt & Sprungli (brazil)</td><td>001, 004, 007, 008</td><td><b>4</b></td><td>0</td></tr>
+        <tr><td>691488</td><td>Chocolate Milka 100g Ao Leite</td><td>Big Brands Group</td><td>001, 004, 007, 008</td><td><b>4</b></td><td>0</td></tr>
+        <tr><td>1093622</td><td>Caps Cafe Starbucks 55g 12cap Nespresso Verona B1</td><td>Nestle Brasil - Ped</td><td>001, 004, 007, 008</td><td><b>4</b></td><td>0</td></tr>
+        <tr><td>1093614</td><td>Caps Cafe Starbucks 57g 10cap Nespresso House Blend B1</td><td>Nestle Brasil - Ped</td><td>001, 004, 007, 008</td><td><b>4</b></td><td>0</td></tr>
+        <tr><td>1093649</td><td>Caps Cafe Starbucks 57g 12cap Colombia B1</td><td>Nestle Brasil - Ped</td><td>001, 004, 007, 008</td><td><b>4</b></td><td>0</td></tr>
+        <tr><td>867055</td><td>Cha Misto Dr Oetker 15g Camomila Cidreira Hortela</td><td>Dr. Oetker - Novo Maceio</td><td>001, 004, 007, 008</td><td><b>4</b></td><td>0</td></tr>
+        <tr><td>1181599</td><td>Pipoca Canjica Okoshi 50g De Milho Cacau Em Po</td><td>Okoshi</td><td>001, 004, 007, 008</td><td><b>4</b></td><td>0</td></tr>
+        <tr><td>1271105</td><td>Bebida Chocoki Essential 200ml Uht Multivitaminico</td><td>Essential Nutrition</td><td>001, 004, 007, 008</td><td><b>4</b></td><td>0</td></tr>
+        <tr><td>428167</td><td>Biscoito Bahlsen 100g Waffle Mini Choc</td><td>Aurora - Ped</td><td>001, 007, 008</td><td><b>3</b></td><td>0</td></tr>
+        <tr><td>1215736</td><td>Biscoito De Arroz Fit Food 90g Quinoa Linhaca</td><td>M Dias Branco - Jasmine</td><td>001, 004, 007</td><td><b>3</b></td><td>0</td></tr>
+        <tr><td>1102729</td><td>Biscoito Bauducco 36g Chocobiscuit Ao Leite</td><td>Pandurata Alimentos - Ped</td><td>001, 007, 008</td><td><b>3</b></td><td>0</td></tr>
+        <tr><td>1236940</td><td>Pao Fatiado Jasmine 350g Com Milho Sem Gluten</td><td>M Dias Branco - Jasmine</td><td>001, 004, 007</td><td><b>3</b></td><td>30</td></tr>
+        <tr><td>1228157</td><td>Grissini Florio 120g Integral Multigraos</td><td>Casa Fortunato</td><td>001, 004, 007</td><td><b>3</b></td><td>45</td></tr>
+        <tr><td>1014226</td><td>Pao Jasmine 350g Multigraos Sem Gluten</td><td>M Dias Branco - Jasmine</td><td>001, 004, 007</td><td><b>3</b></td><td>60</td></tr>
+        <tr><td>1234153</td><td>Grissini Florio 120g Integral Tomate Seco</td><td>Casa Fortunato</td><td>001, 004, 007</td><td><b>3</b></td><td>60</td></tr>
+        <tr><td>926825</td><td>Biscoito Marilian 140g Tortinhas Maracuja</td><td>Marilan Nordeste</td><td>001, 004, 007</td><td><b>3</b></td><td>0</td></tr>
+        <tr><td>1166140</td><td>Biscoito Milka 180g Wafer</td><td>Big Brands Group</td><td>001, 007, 008</td><td><b>3</b></td><td>0</td></tr>
+        <tr><td>407801</td><td>Biscoito Tub In 48g Wafer Trufas</td><td>Montevergine - Es</td><td>001, 004, 007</td><td><b>3</b></td><td>72</td></tr>
+        <tr><td>1133799</td><td>Biscoito Whey Viv 45g Amendoim</td><td>Whey Viv - Ped</td><td>001, 004, 008</td><td><b>3</b></td><td>0</td></tr>
+        <tr><td>407810</td><td>Biscoito Tub In 48g Wafer Avela</td><td>Montevergine - Es</td><td>001, 004, 007</td><td><b>3</b></td><td>96</td></tr>
+        <tr><td>1277723</td><td>Bt 400 Nitrato Dobro 30g Blueberry Em Po Sache</td><td>Dobro</td><td>001, 004, 007</td><td><b>3</b></td><td>0</td></tr>
+        <tr><td>113859</td><td>Geleia Queensberry 320g Classic Amora</td><td>Hero - Queensberry Ped</td><td>001, 007, 008</td><td><b>3</b></td><td>0</td></tr>
+        <tr><td>132250</td><td>Gelatina Dr Oetker 24g Sem Sabor Incolor Po</td><td>Dr. Oetker - Novo Maceio</td><td>001, 004, 008</td><td><b>3</b></td><td>0</td></tr>
+        <tr><td>1039792</td><td>Cha Gelado Leao 10und Mate Groselha Neg</td><td>Matte Leao - Ped</td><td>001, 004, 007</td><td><b>3</b></td><td>0</td></tr>
+        <tr><td>864404</td><td>Chocolate Zeromilk 70g Puro 0% Lactose</td><td>Genevy Chocolates</td><td>001, 004, 007</td><td><b>3</b></td><td>0</td></tr>
+      </tbody></table></div>
+</div>
+
+<!-- FRENTE 2 -->
+<div class="frente-panel" id="f2">
+  <h2>Frente 2 — Fornecedores Estratégicos</h2>
+  <div class="subtitle">Ruptura média e status atual dos fornecedores estratégicos da Mercearia Doce</div>
+    <div class="bar-row"><div class="bar-label">Piracanjuba -  Ped</div><div class="bar-container"><div class="bar-fill" style="width:100%;background:#E31837;">32.86%</div></div><div class="bar-val" style="color:#E31837;">32.86%</div></div>
+    <div class="bar-row"><div class="bar-label">Dapal - Ped</div><div class="bar-container"><div class="bar-fill" style="width:32.59281801582471%;background:#c67c00;">10.71%</div></div><div class="bar-val" style="color:#c67c00;">10.71%</div></div>
+    <div class="bar-row"><div class="bar-label">Nestle Brasil - Ped</div><div class="bar-container"><div class="bar-fill" style="width:27.875836883749237%;background:#00873e;">9.16%</div></div><div class="bar-val" style="color:#00873e;">9.16%</div></div>
+    <div class="bar-row"><div class="bar-label">Pepsico ( Elma Chips )</div><div class="bar-container"><div class="bar-fill" style="width:24.710894704808275%;background:#00873e;">8.12%</div></div><div class="bar-val" style="color:#00873e;">8.12%</div></div>
+    <div class="bar-row"><div class="bar-label">Três Corações Alimentos - Ped</div><div class="bar-container"><div class="bar-fill" style="width:20.02434570906878%;background:#00873e;">6.58%</div></div><div class="bar-val" style="color:#00873e;">6.58%</div></div>
+    <div class="bar-row"><div class="bar-label">M Dias Branco Rec</div><div class="bar-container"><div class="bar-fill" style="width:17.863664029214853%;background:#00873e;">5.87%</div></div><div class="bar-val" style="color:#00873e;">5.87%</div></div>
+    <div class="bar-row"><div class="bar-label">Danone - Mercearia</div><div class="bar-container"><div class="bar-fill" style="width:3.7735849056603774%;background:#00873e;">1.24%</div></div><div class="bar-val" style="color:#00873e;">1.24%</div></div>
+    <div class="bar-row"><div class="bar-label">Kelloggs</div><div class="bar-container"><div class="bar-fill" style="width:100%;background:#ccc;color:#666;">aguardando inclusão</div></div><div class="bar-val" style="color:#999;">N/A</div></div>
+  <div class="aviso"><strong>Observação:</strong> Kelloggs não consta na base atual de fornecedores estratégicos. Inclusão solicitada à analista para o próximo ciclo mensal.</div>
+  <h3 style="margin-top:20px;font-size:14px;">Último dia registrado</h3>
+    <div class="bar-row"><div class="bar-label">Piracanjuba -  Ped</div><div class="bar-container"><div class="bar-fill" style="width:71.76%;background:#E31837;">23.92%</div></div><div class="bar-val" style="color:#E31837;">23.92%</div></div>
+    <div class="bar-row"><div class="bar-label">Dapal - Ped</div><div class="bar-container"><div class="bar-fill" style="width:25.619999999999997%;background:#00873e;">8.54%</div></div><div class="bar-val" style="color:#00873e;">8.54%</div></div>
+    <div class="bar-row"><div class="bar-label">Nestle Brasil - Ped</div><div class="bar-container"><div class="bar-fill" style="width:24.36%;background:#00873e;">8.12%</div></div><div class="bar-val" style="color:#00873e;">8.12%</div></div>
+    <div class="bar-row"><div class="bar-label">Pepsico ( Elma Chips )</div><div class="bar-container"><div class="bar-fill" style="width:5.76%;background:#00873e;">1.92%</div></div><div class="bar-val" style="color:#00873e;">1.92%</div></div>
+    <div class="bar-row"><div class="bar-label">Três Corações Alimentos - Ped</div><div class="bar-container"><div class="bar-fill" style="width:26.73%;background:#00873e;">8.91%</div></div><div class="bar-val" style="color:#00873e;">8.91%</div></div>
+    <div class="bar-row"><div class="bar-label">M Dias Branco Rec</div><div class="bar-container"><div class="bar-fill" style="width:17.13%;background:#00873e;">5.71%</div></div><div class="bar-val" style="color:#00873e;">5.71%</div></div>
+    <div class="bar-row"><div class="bar-label">Danone - Mercearia</div><div class="bar-container"><div class="bar-fill" style="width:0%;background:#00873e;">0%</div></div><div class="bar-val" style="color:#00873e;">0%</div></div>
+</div>
+
+<!-- FRENTE 3 -->
+<div class="frente-panel" id="f3">
+  <h2>Frente 3 — Rupturas com produto disponível no CD</h2>
+  <div class="subtitle">Itens Curva A e B em ruptura nas lojas de Maceió, com estoque no CD — priorizados por maior volume no CD</div>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Total itens AB com CD</div><div class="valor red">87</div><div class="sub">únicos</div></div>
+    <div class="kpi"><div class="label">Estratégicos</div><div class="valor orange">1</div><div class="sub">prioridade</div></div>
+    <div class="kpi"><div class="label">Curva A</div><div class="valor red">73</div></div>
+    <div class="kpi"><div class="label">Curva B</div><div class="valor orange">14</div></div>
+  </div>
+  <h3 style="margin-top:10px;font-size:14px;">Top 30 — maior volume no CD (AB)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Código</th><th>Descrição</th><th>Fornecedor</th><th>Curva</th><th>Est. CD</th><th>Lojas em ruptura</th></tr></thead>
+      <tbody>
+        <tr class="estrategico"><td>684872</td><td>Caps Cappuccino 3 Coracoes 110g Classic</td><td>Três Corações Alimentos - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b>1000</b></td><td>007 (1)</td></tr>
+        <tr><td>1216031</td><td>Biscoito Milka 30g Wafer</td><td>Big Brands Group</td><td><span class="badge badge-A">A</span></td><td><b>4080</b></td><td>007 (1)</td></tr>
+        <tr><td>826014</td><td>Biscoito Milka 120g Mooo</td><td>Big Brands Group</td><td><span class="badge badge-A">A</span></td><td><b>720</b></td><td>007 (1)</td></tr>
+        <tr><td>1034707</td><td>Biscoito Bauducco 80g Chocobiscuit Meio Amargo</td><td>Pandurata Alimentos - Ped</td><td><span class="badge badge-B">B</span></td><td><b>720</b></td><td>004, 007 (2)</td></tr>
+        <tr><td>525812</td><td>Fermento Fleischmann 10g Instantaneo</td><td>Ab Brasil Ind - Ped</td><td><span class="badge badge-A">A</span></td><td><b>552</b></td><td>001, 004 (2)</td></tr>
+        <tr><td>833126</td><td>Canjica Okoshi 50g c Sal Marinho</td><td>Okoshi</td><td><span class="badge badge-A">A</span></td><td><b>540</b></td><td>001, 007 (2)</td></tr>
+        <tr><td>963860</td><td>Doce De Leite Italac 350g Pote</td><td>Italac</td><td><span class="badge badge-A">A</span></td><td><b>480</b></td><td>004 (1)</td></tr>
+        <tr><td>833118</td><td>Canjica Okoshi 50g c Acucar Org</td><td>Okoshi</td><td><span class="badge badge-A">A</span></td><td><b>432</b></td><td>001, 004 (2)</td></tr>
+        <tr><td>1243527</td><td>Achocolatado Toddy Sachet 300g Original</td><td>Pepsico Foods</td><td><span class="badge badge-B">B</span></td><td><b>336</b></td><td>001 (1)</td></tr>
+        <tr><td>1123815</td><td>Leite Uht Italac 1lt Integral Zero Lactose</td><td>Italac</td><td><span class="badge badge-A">A</span></td><td><b>322</b></td><td>001 (1)</td></tr>
+        <tr><td>1181300</td><td>Bananinha Tropdan 25g Sem Acucar</td><td>Tropdan</td><td><span class="badge badge-A">A</span></td><td><b>300</b></td><td>007 (1)</td></tr>
+        <tr><td>1225111</td><td>Biscoito Salgado Sol Hits 80g Cebola e Salsa</td><td>J Macedo - Dona Benta Ped</td><td><span class="badge badge-A">A</span></td><td><b>288</b></td><td>007 (1)</td></tr>
+        <tr><td>1225120</td><td>Biscoito Salgado Sol Hits 80g Churrasco</td><td>J Macedo - Dona Benta Ped</td><td><span class="badge badge-A">A</span></td><td><b>288</b></td><td>007 (1)</td></tr>
+        <tr><td>344389</td><td>Gergelim Integral Jasmine 150g Branco Natural</td><td>M Dias Branco - Jasmine</td><td><span class="badge badge-A">A</span></td><td><b>240</b></td><td>001, 007 (2)</td></tr>
+        <tr><td>1157043</td><td>Salgadinho Cheez It 65g Assado Cheddar</td><td>Kelloggs</td><td><span class="badge badge-A">A</span></td><td><b>240</b></td><td>007 (1)</td></tr>
+        <tr><td>1244990</td><td>Canjica De Milho Okoshi 40g Manteiga</td><td>Okoshi</td><td><span class="badge badge-A">A</span></td><td><b>216</b></td><td>001 (1)</td></tr>
+        <tr><td>1224689</td><td>Canjica De Milho Okoshi 50g Açucar De Coco</td><td>Okoshi</td><td><span class="badge badge-A">A</span></td><td><b>198</b></td><td>001, 004, 007 (3)</td></tr>
+        <tr><td>1042459</td><td>Pipoca Mais Pura 50g Caramelo Flor Sal</td><td>Mais Pura</td><td><span class="badge badge-A">A</span></td><td><b>190</b></td><td>007 (1)</td></tr>
+        <tr><td>1181602</td><td>Pipoca Pronta De Caramelo e Flor De Sal Okoshi 50g</td><td>Okoshi</td><td><span class="badge badge-A">A</span></td><td><b>180</b></td><td>001, 004, 007 (3)</td></tr>
+        <tr><td>1296371</td><td>Minipao Grani Amici 70g Tradicional Vegano</td><td>Grani Amici</td><td><span class="badge badge-B">B</span></td><td><b>180</b></td><td>004, 007 (2)</td></tr>
+        <tr><td>1245007</td><td>Canjica De Milho Okoshi 40g Com Azeite De Oliva</td><td>Okoshi</td><td><span class="badge badge-B">B</span></td><td><b>180</b></td><td>001 (1)</td></tr>
+        <tr><td>318973</td><td>Cafe Melitta 40g Instantaneo Sache</td><td>Melitta Do Brasil</td><td><span class="badge badge-A">A</span></td><td><b>168</b></td><td>001 (1)</td></tr>
+        <tr><td>1042491</td><td>Pipoca Mais Pura 100g Caramelo Flor Sal</td><td>Mais Pura</td><td><span class="badge badge-A">A</span></td><td><b>150</b></td><td>007 (1)</td></tr>
+        <tr><td>1079522</td><td>Achocolatado Toddy 480g Original Sachet</td><td>Pepsico Foods</td><td><span class="badge badge-A">A</span></td><td><b>144</b></td><td>001 (1)</td></tr>
+        <tr><td>526088</td><td>Aroma Fleischmann 30ml Baunilha</td><td>Ab Brasil Ind - Ped</td><td><span class="badge badge-A">A</span></td><td><b>144</b></td><td>001 (1)</td></tr>
+        <tr><td>963887</td><td>Leite Condensado Italac 395g Zero Lactose</td><td>Italac</td><td><span class="badge badge-A">A</span></td><td><b>135</b></td><td>004 (1)</td></tr>
+        <tr><td>130710</td><td>Cafe Melitta 250g Tradicional Vacuo</td><td>Melitta Do Brasil</td><td><span class="badge badge-A">A</span></td><td><b>120</b></td><td>001 (1)</td></tr>
+        <tr><td>963810</td><td>Chocolate Italac 200g Em Po Soluvel</td><td>Italac</td><td><span class="badge badge-A">A</span></td><td><b>120</b></td><td>001 (1)</td></tr>
+        <tr><td>1179152</td><td>Caps Cafe Baggio 50g10und Caramelo</td><td>Baggio Cafe</td><td><span class="badge badge-A">A</span></td><td><b>120</b></td><td>004 (1)</td></tr>
+        <tr><td>1042521</td><td>Pipoca Mais Pura 100g Cacau Original</td><td>Mais Pura</td><td><span class="badge badge-A">A</span></td><td><b>120</b></td><td>007 (1)</td></tr>
+      </tbody></table></div>
+</div>
+
+<!-- FRENTE 4 -->
+<div class="frente-panel" id="f4">
+  <h2>Frente 4 — Desequilíbrio de estoque entre lojas</h2>
+  <div class="subtitle">Itens Curva A e B zerados em lojas de Maceió, com estoque positivo em outra loja de Maceió</div>
+  <div class="aviso-info"><strong>Escopo:</strong> análise considera apenas as lojas de Maceió (001, 002, 004 e 007). A loja 008 (Riomar/Recife) foi excluída pois não realiza transferências para as demais unidades.</div>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Total desequilíbrios AB</div><div class="valor red">316</div></div>
+    <div class="kpi"><div class="label">Estratégicos</div><div class="valor orange">36</div></div>
+    <div class="kpi"><div class="label">Curva A</div><div class="valor red">262</div></div>
+    <div class="kpi"><div class="label">Curva B</div><div class="valor orange">54</div></div>
+  </div>
+  <h3 style="font-size:14px;">Top 30 desequilíbrios — prioridade estratégicos + mais lojas zeradas</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Código</th><th>Descrição</th><th>Fornecedor</th><th>Curva</th><th>Lojas zeradas</th><th>Lojas com estoque</th></tr></thead>
+      <tbody>
+        <tr class="estrategico"><td>684872</td><td>Caps Cappuccino 3 Coracoes 110g Classic</td><td>Três Corações Alimentos - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">002, 007</b> (2)</td><td style="color:#00873e;">001:41</td></tr>
+        <tr class="estrategico"><td>923230</td><td>Cafe Santa Clara 250g Sul De Minas Reserva Familia</td><td>Três Corações Alimentos - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">004, 007</b> (2)</td><td style="color:#00873e;">001:25</td></tr>
+        <tr class="estrategico"><td>1237644</td><td>Cappuccino Whey 3 Coracoes 250ml 15g Chocolate</td><td>Três Corações Alimentos - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">001, 007</b> (2)</td><td style="color:#00873e;">002:16, 004:6</td></tr>
+        <tr class="estrategico"><td>1200267</td><td>Biscoito Wafer Hanuta 22g Creme De Avela</td><td>Dapal - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">001, 007</b> (2)</td><td style="color:#00873e;">002:22</td></tr>
+        <tr class="estrategico"><td>1054163</td><td>Cafe Nescafe 250g Gold Intenso Sache</td><td>Nestle Brasil - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">004, 007</b> (2)</td><td style="color:#00873e;">001:7</td></tr>
+        <tr class="estrategico"><td>177148</td><td>Cereal Matinal Nestle 230g Moca Flakes</td><td>Nestle Brasil - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">001, 004</b> (2)</td><td style="color:#00873e;">007:1</td></tr>
+        <tr class="estrategico"><td>1038303</td><td>Chocolate Garoto 80g Ao Leite Regular</td><td>Nestle Brasil - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:541, 004:612, 007:467</td></tr>
+        <tr class="estrategico"><td>189456</td><td>Biscoito Krokitos 80g Recheado</td><td>M Dias Branco Rec <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:529, 004:457, 007:282</td></tr>
+        <tr class="estrategico"><td>1038362</td><td>Chocolate Garoto 80g Negresco Regular</td><td>Nestle Brasil - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:227, 004:371, 007:265</td></tr>
+        <tr class="estrategico"><td>1197690</td><td>Caps Cafe 3 Coracoes 50g Cerrado Mineiro Compativel</td><td>Três Corações Alimentos - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:249, 004:2, 007:309</td></tr>
+        <tr class="estrategico"><td>1044176</td><td>Chocolate Nestle 80g Galak Regular</td><td>Nestle Brasil - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:99, 004:314, 007:84</td></tr>
+        <tr class="estrategico"><td>1145894</td><td>Biscoito Vitarella 80g Wafer Morango</td><td>M Dias Branco Rec <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:151, 004:116, 007:173</td></tr>
+        <tr class="estrategico"><td>1072200</td><td>Torrada Vitarellla 142g Integral</td><td>M Dias Branco Rec <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:210, 004:159, 007:33</td></tr>
+        <tr class="estrategico"><td>1038320</td><td>Chocolate Garoto 80g Chocolate Branco Regular</td><td>Nestle Brasil - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:95, 004:118, 007:80</td></tr>
+        <tr class="estrategico"><td>1132989</td><td>Biscoito Treloso 110g Amanteigado Ao Leite</td><td>M Dias Branco Rec <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:88, 004:68, 007:102</td></tr>
+        <tr class="estrategico"><td>1165445</td><td>Batata Ruffles 115g Original</td><td>Pepsico ( Elma Chips ) <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:93, 004:36, 007:113</td></tr>
+        <tr class="estrategico"><td>1197703</td><td>Caps Cafe 3 Coracoes 50g Intenso Compativel</td><td>Três Corações Alimentos - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:182, 004:30, 007:20</td></tr>
+        <tr class="estrategico"><td>1072196</td><td>Torrada Vitarellla 142g Tradicional</td><td>M Dias Branco Rec <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:59, 004:22, 007:88</td></tr>
+        <tr class="estrategico"><td>1100360</td><td>Batata Frita Sensacoes 70g Frango Grelhado</td><td>Pepsico ( Elma Chips ) <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">007</b> (1)</td><td style="color:#00873e;">001:46, 002:24, 004:12</td></tr>
+        <tr class="estrategico"><td>1093630</td><td>Caps Cafe Starbucks 53g 12cap Pike Place Roast B1</td><td>Nestle Brasil - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">004</b> (1)</td><td style="color:#00873e;">001:38, 007:23</td></tr>
+        <tr class="estrategico"><td>1226800</td><td>Salgadinho Fandangos 160g Churrasco</td><td>Pepsico ( Elma Chips ) <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">007</b> (1)</td><td style="color:#00873e;">001:24, 004:25</td></tr>
+        <tr class="estrategico"><td>191680</td><td>Biscoito Fortaleza 350g Maizena</td><td>M Dias Branco Rec <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">007</b> (1)</td><td style="color:#00873e;">001:1, 002:24, 004:19</td></tr>
+        <tr class="estrategico"><td>769932</td><td>Leite Condensado Nestle 410g Moca Light</td><td>Nestle Brasil - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">004</b> (1)</td><td style="color:#00873e;">001:26, 007:16</td></tr>
+        <tr class="estrategico"><td>989703</td><td>Chocolate Charge 117g</td><td>Nestle Brasil - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">001</b> (1)</td><td style="color:#00873e;">002:17, 004:8, 007:14</td></tr>
+        <tr class="estrategico"><td>607223</td><td>Composto Lacteo Ninho 800g 1+ Pbio1 Fases Sache</td><td>Nestle Brasil - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">007</b> (1)</td><td style="color:#00873e;">001:16, 004:5</td></tr>
+        <tr class="estrategico"><td>1093665</td><td>Caps Cafe Starbucks 53g 12cap Nespresso Blond B1</td><td>Nestle Brasil - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-A">A</span></td><td><b style="color:#E31837;">007</b> (1)</td><td style="color:#00873e;">001:1, 004:1</td></tr>
+        <tr class="estrategico"><td>1234099</td><td>Biscoito Piraque 80g Supreme Cheesecake c Geleia Frutas Vermelhas</td><td>M Dias Branco Rec <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-B">B</span></td><td><b style="color:#E31837;">002, 004, 007</b> (3)</td><td style="color:#00873e;">001:1</td></tr>
+        <tr class="estrategico"><td>1286404</td><td>Biscoito Cracker Piraque 162g Premium Integral</td><td>M Dias Branco Rec <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-B">B</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:85, 004:52, 007:207</td></tr>
+        <tr class="estrategico"><td>1248901</td><td>Choc Kinder Joy 20g T1 Batwheels</td><td>Dapal - Ped <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-B">B</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">004:36, 007:191</td></tr>
+        <tr class="estrategico"><td>1234110</td><td>Biscoito Piraque 80g Supreme Chocolate Branco e Geleia Maca c Canela</td><td>M Dias Branco Rec <span class="badge-est">ESTRAT.</span></td><td><span class="badge badge-B">B</span></td><td><b style="color:#E31837;">002</b> (1)</td><td style="color:#00873e;">001:45, 004:82, 007:33</td></tr>
+      </tbody></table></div>
+</div>
+
+<!-- FRENTE 5 -->
+<div class="frente-panel" id="f5">
+  <h2>Frente 5 — Cumprimento da Agenda de Pedidos</h2>
+  <div class="subtitle">Média do mês para Mercearia Doce: <strong style="color:#E31837;">67.5%</strong></div>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Média do mês</div><div class="valor orange">67.5%</div></div>
+    <div class="kpi"><div class="label">Dias medidos</div><div class="valor">9</div></div>
+    <div class="kpi"><div class="label">Melhor dia</div><div class="valor green">100%</div></div>
+    <div class="kpi"><div class="label">Pior dia</div><div class="valor red">20.0%</div></div>
+  </div>
+  <h3 style="font-size:14px;margin-top:10px;">Cumprimento por dia</h3>
+  <div class="agenda-grid">
+    <div class="agenda-dia"><div class="dia">07/04</div><div class="val low">20.0%</div></div>
+    <div class="agenda-dia"><div class="dia">08/04</div><div class="val low">40.0%</div></div>
+    <div class="agenda-dia"><div class="dia">09/04</div><div class="val high">100%</div></div>
+    <div class="agenda-dia"><div class="dia">10/04</div><div class="val mid">75.0%</div></div>
+    <div class="agenda-dia"><div class="dia">13/04</div><div class="val low">37.5%</div></div>
+    <div class="agenda-dia"><div class="dia">14/04</div><div class="val mid">63.6%</div></div>
+    <div class="agenda-dia"><div class="dia">16/04</div><div class="val mid">71.4%</div></div>
+    <div class="agenda-dia"><div class="dia">17/04</div><div class="val high">100%</div></div>
+    <div class="agenda-dia"><div class="dia">None</div><div class="val high">100%</div></div>
+  </div>
+</div>
+</div>
+<script>
+function showFrente(e, n) {
+  document.querySelectorAll('.frente-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.frente-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('f'+n).classList.add('active');
+  e.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>
